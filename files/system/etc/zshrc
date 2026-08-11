@@ -1,0 +1,78 @@
+#
+# /etc/zshrc is sourced in interactive shells.  It
+# should contain commands to set up aliases, functions,
+# options, key bindings, etc.
+#
+
+## shell functions
+#setenv() { export $1=$2 }  # csh compatibility
+
+# Set prompts
+[[ "$PROMPT" = "%m%# " ]] && PROMPT='[%n@%m]%~%# '    # default prompt
+#RPROMPT=' %~'     # prompt for right side of screen
+
+# bindkey -v             # vi key bindings
+# bindkey -e             # emacs key bindings
+bindkey ' ' magic-space  # also do history expansion on space
+
+# Provide pathmunge for /etc/profile.d scripts
+pathmunge()
+{
+    if ! echo $PATH | /bin/grep -qE "(^|:)$1($|:)" ; then
+        if [ "$2" = "after" ] ; then
+            PATH=$PATH:$1
+        else
+            PATH=$1:$PATH
+        fi
+    fi
+}
+
+_src_etc_profile_d()
+{
+    #  Make the *.sh things happier, and have possible ~/.zshenv options like
+    # NOMATCH ignored.
+    emulate -L ksh
+
+
+    # from bashrc, with zsh fixes
+    if [[ ! -o login ]]; then # We're not a login shell
+        for i in /etc/profile.d/*.sh; do
+	    if [ -r "$i" ]; then
+	        . $i
+	    fi
+        done
+        unset i
+    fi
+}
+_src_etc_profile_d
+
+unset -f pathmunge _src_etc_profile_d
+
+# HISTORY CONFIGURATION
+HISTFILE="$HOME/.zsh_history"
+
+# How many lines to keep in the current session
+HISTSIZE=5000
+
+# How many lines to save in the history file
+SAVEHIST=5000
+
+# Recommended options for a better experience:
+setopt APPEND_HISTORY     # Append to the file, don't overwrite it
+setopt SHARE_HISTORY      # Share history between different instances of zsh
+setopt INC_APPEND_HISTORY # Write to the history file immediately, not just on exit
+
+# END OF HISTORY CONFIGURATION
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Disable underline on zsh-syntax-highlighting
+(( ${+ZSH_HIGHLIGHT_STYLES} )) || typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[path]=none
+ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+
+autoload -Uz bashcompinit
+bashcompinit
+
+eval "$(starship init zsh)"

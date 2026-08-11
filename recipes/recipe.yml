@@ -1,0 +1,214 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+name: lontara
+# description will be included in the image's metadata
+description: Traditional Linux Desktop in Modern Environment
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: ghcr.io/ublue-os/base-main
+image-version: 44 # latest is also supported if you want new updates ASAP
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
+  - type: os-release
+    properties:
+      ID: lontara
+      ID_LIKE: fedora
+      NAME: Lontara
+      PRETTY_NAME: Lontara
+      LOGO: lontara
+      DEFAULT_HOSTNAME: lontara
+      BUG_REPORT_URL: https://github.com/prastowoagungwidodo/lontara/issues
+      HOME_URL: https://github.com/prastowoagungwidodo/lontara
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+        - secureblue/packages
+        - scottames/ghostty
+        - quadratech188/vicinae
+      files:
+        - https://repo.secureblue.dev/secureblue.repo
+      nonfree: negativo17
+    group-install:
+      packages:
+        - development-tools
+        - xfce-desktop
+        - xfce-extra-plugins
+    install:
+      packages:
+        - initial-setup
+        - lightdm
+        - lightdm-gtk-greeter
+        - lightdm-gtk-greeter-settings
+        - network-manager-applet
+        - xarchiver
+        - xfce4-clipman-plugin
+        - vicinae
+        - touchegg
+        - xclip
+        - firefox
+        - dejavu-fonts-all
+        - bitstream-vera-fonts-all
+        - twitter-twemoji-fonts
+        - redshift
+        - human-theme-gtk
+        - gtk2-engines
+        - gtk-murrine-engine
+        - elementary-xfce-icon-theme
+        - papirus-icon-theme
+        - ghostty
+        - alacritty
+        - starship
+        - trivalent
+        - trivalent-subresource-filter
+        - trivalent-selinux
+        - zsh
+        - usbguard
+        - usbguard-notifier
+        - usbguard-selinux
+        - adw-gtk3-theme
+        - 7zip
+        - 7zip-standalone-all
+        - hardened_malloc
+        - no_rlimit_as
+        - unrar
+        - hfsutils
+        - hfsplus-tools
+        - libopenjph
+        - heif-pixbuf-loader
+        - ffmpegthumbnailer
+        - pipewire-libs-extra
+        - g++
+        - openssl-devel
+        - podman
+        - podman-compose
+        - python3-pip
+        - schroedinger-cat-backgrounds-xfce
+    replace:
+      - from-repo: fedora-multimedia
+        skip-unavailable: true
+        allow-erasing: true
+        packages:
+          - libheif
+          - libva
+          - mesa-dri-drivers
+          - gstreamer1-plugin-libav
+          - mesa-filesystem
+          - mesa-libEGL
+          - mesa-libGL
+          - mesa-libgbm
+          - mesa-va-drivers
+          - mesa-vulkan-drivers
+          - libva-intel-media-driver
+          - intel-gmmlib
+          - intel-mediasdk
+          - old: ffmpeg-free
+            new: ffmpeg
+          - old: fdk-aac-free
+            new: libfdk-aac
+          - old: gstreamer1-plugins-ugly-free
+            new: gstreamer1-plugins-ugly
+          - old: libavcodec-free
+            new: libavcodec
+          - old: libavdevice-free
+            new: libavdevice
+          - old: libavfilter-free
+            new: libavfilter
+          - old: libavformat-free
+            new: libavformat
+          - old: libavutil-free
+            new: libavutil
+          - old: libpostproc-free
+            new: libpostproc
+          - old: libswresample-free
+            new: libswresample
+          - old: libswscale-free
+            new: libswscale
+    remove:
+      packages:
+        - dnfdragora
+        - dnfdragora-updater
+        - thunderbird
+  - type: default-flatpaks
+    configurations:
+      - notify: false # Send notification after install/uninstall is finished (true/false)
+        scope: system
+        # If no repo information is specified, Flathub will be used by default
+        install:
+          - org.xfce.ristretto
+          - org.xfce.mousepad
+          - org.videolan.VLC
+          - org.atheme.audacious
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
+        - NerdFontsSymbolsOnly
+  - type: gschema-overrides
+  - type: systemd
+    system:
+      enabled:
+        - usbguard.service
+        - initial-setup.service
+        - lightdm.service
+    user:
+      enabled:
+        - usbguard-notifier.service
+  - type: brew
+    nofile-limits: true # increase nofile limits
+    brew-analytics: false # disable telemetry
+  - type: script
+    scripts:
+      #- lontara-customize.sh
+      - netbird-install.sh
+      - enable-faillock.sh
+      #- disable-sshd-vsock.sh
+      - disable-avahi-daemon.sh
+      - install-zsh-plugins.sh
+      #- install-warp-terminal.sh
+      - hardened_malloc.sh
+      - setting-up-human-theme-env.sh
+      - install-ubuntu-icon.sh
+      - install-dmz-cursor-theme.sh
+  - type: kargs
+    arch: x86_64, aarch64
+    kargs:
+      - loglevel=0
+      - module.sig_enforce=1
+      - page_alloc.shuffle=1
+      - proc_mem.force_override=ptrace
+      - pti=on
+      - random.trust_bootloader=off
+      - random.trust_cpu=off
+      - randomize_kstack_offset=on
+      - rd.shell=0
+      - rd.emergency=halt
+      - slab_nomerge
+      - spec_store_bypass_disable=on
+      - spectre_v2=on
+      - ssbd=force-on
+      - vdso32=0
+      - vsyscall=none
+      - init_on_alloc=1
+      - init_on_free=1
+      - iommu=force
+      - intel_iommu=on
+      - iommu.passthrough=0
+      - iommu.strict=1
+      - kvm-intel.vmentry_l1d_flush=always
+      - kvm.mitigate_smt_rsb=1
+      - l1d_flush=on
+      - lockdown=confidentiality
+      - systemd.ssh_auto=no
+      - efi=disable_early_pci_dma
+      - debugfs=off
+  - type: initramfs
+  - type: signing # this sets up the proper policy & signing files for signed images to work fully
