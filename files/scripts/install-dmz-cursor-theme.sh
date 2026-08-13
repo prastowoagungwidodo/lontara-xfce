@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-URL="http://launchpadlibrarian.net/845777996/dmz-cursor-theme_0.4.5.3build1_all.deb"
+URL="http://mirrors.kernel.org/ubuntu/pool/main/d/dmz-cursor-theme/dmz-cursor-theme_0.4.5.3build1_all.deb"
 WORKDIR="$(mktemp -d)"
 
 echo "Using temporary directory: $WORKDIR"
