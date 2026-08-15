@@ -91,7 +91,7 @@ modules:
         - podman
         - podman-compose
         - python3-pip
-        - schroedinger-cat-backgrounds-xfce
+        - imlib2
     replace:
       - from-repo: fedora-multimedia
         skip-unavailable: true
