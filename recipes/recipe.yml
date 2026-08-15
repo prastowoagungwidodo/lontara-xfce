@@ -51,6 +51,7 @@ modules:
         - network-manager-applet
         - xarchiver
         - xfce4-clipman-plugin
+        - xfwm4-themes
         - vicinae
         - touchegg
         - xclip
@@ -91,7 +92,6 @@ modules:
         - podman
         - podman-compose
         - python3-pip
-        - imlib2
     replace:
       - from-repo: fedora-multimedia
         skip-unavailable: true
