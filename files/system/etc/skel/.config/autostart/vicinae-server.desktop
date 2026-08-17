@@ -2,9 +2,9 @@
 Encoding=UTF-8
 Version=0.9.4
 Type=Application
-Name=redshift
-Comment=Adjust the color temperature of your screen
-Exec=redshift
+Name=vicinae-server
+Comment=Run Vicinae Server
+Exec=vicinae server --replace
 OnlyShowIn=XFCE;
 RunHook=0
 StartupNotify=false
