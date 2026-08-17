@@ -92,6 +92,8 @@ modules:
         - podman
         - podman-compose
         - python3-pip
+        - xdg-desktop-portal-xapp
+        - xdg-desktop-portal-gtk
     replace:
       - from-repo: fedora-multimedia
         skip-unavailable: true
@@ -159,6 +161,7 @@ modules:
         - usbguard.service
         - initial-setup.service
         - lightdm.service
+        - touchegg
     user:
       enabled:
         - usbguard-notifier.service

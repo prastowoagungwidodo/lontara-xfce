@@ -1,0 +1,9 @@
+[Scheme]
+Name=CatBox
+ColorForeground=#ebdbb2
+ColorBackground=#1d2021
+ColorCursor=#ffffff
+ColorSelection=#262626
+ColorSelectionBackground=#262626
+ColorSelectionForeground=#f2f4f8
+ColorPalette=#292929;#ea6962;#a9b665;#d8a657;#7daea3;#ff7eb6;#89b482;#ebdbb2;#393939;#ff7eb6;#42be65;#ffe97b;#33b1ff;#ee5396;#3ddbd9;#ffffff

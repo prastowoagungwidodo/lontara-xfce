@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+  <property name="font-use-system" type="bool" value="true"/>
+  <property name="scrolling-bar" type="string" value="TERMINAL_SCROLLBAR_NONE"/>
+  <property name="misc-menubar-default" type="bool" value="false"/>
+  <property name="color-foreground" type="string" value="#ebdbb2"/>
+  <property name="color-background" type="string" value="#1d2021"/>
+  <property name="color-background-vary" type="bool" value="false"/>
+  <property name="color-cursor-foreground" type="string" value=""/>
+  <property name="color-cursor" type="string" value="#ffffff"/>
+  <property name="color-cursor-use-default" type="bool" value="true"/>
+  <property name="color-selection" type="string" value="#262626"/>
+  <property name="color-selection-background" type="string" value="#262626"/>
+  <property name="color-selection-use-default" type="bool" value="true"/>
+  <property name="color-bold" type="string" value=""/>
+  <property name="color-bold-use-default" type="bool" value="true"/>
+  <property name="color-palette" type="string" value="#292929;#ea6962;#a9b665;#d8a657;#7daea3;#ff7eb6;#89b482;#ebdbb2;#393939;#ff7eb6;#42be65;#ffe97b;#33b1ff;#ee5396;#3ddbd9;#ffffff"/>
+  <property name="color-bold-is-bright" type="bool" value="true"/>
+  <property name="color-use-theme" type="bool" value="false"/>
+  <property name="tab-activity-color" type="string" value="#aa0000"/>
+</channel>
