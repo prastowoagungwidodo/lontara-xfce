@@ -94,6 +94,7 @@ modules:
         - python3-pip
         - xdg-desktop-portal-xapp
         - xdg-desktop-portal-gtk
+        - cmake
     replace:
       - from-repo: fedora-multimedia
         skip-unavailable: true
