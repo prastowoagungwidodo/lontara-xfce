@@ -6,6 +6,8 @@ set -euo pipefail
 # https://github.com/neeeeow/Bluecurve/releases
 echo "Installing Bluecurve theme"
 cd /tmp
+echo "Installing dependencies"
+dnf install -y gtk3-devel gtk2-devel
 echo "Cloning Bluecurve repository"
 git clone https://github.com/neeeeow/Bluecurve.git
 cd Bluecurve
@@ -26,4 +28,6 @@ sudo cp *.ttf /usr/share/fonts/luxi/
 echo "Bluecurve theme installed successfully"
 echo "Cleaning up"
 rm -rf /tmp/Bluecurve
+dnf remove -y gtk3-devel gtk2-devel
+dnf clean all
 echo "Done."
