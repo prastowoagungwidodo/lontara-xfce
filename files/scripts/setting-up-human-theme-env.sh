@@ -15,3 +15,8 @@ GTK_PROGRESS_TEXT_INSIDE=1
 GTK_TREEVIEW_LINES=0 
 GTK_ENLARGE_SCROLLBAR=1
 " >>/etc/environment
+
+mkdir -p /etc/skel/.themes
+# Create symlinks for Human theme in /etc/skel
+# Flatpak only supports themes in ~/.themes, so we need to create a symlink in /etc/skel/.themes for new users.
+ln -sfn /usr/share/themes/Human /etc/skel/.themes
