@@ -162,7 +162,14 @@ modules:
         - usbguard.service
         - initial-setup.service
         - lightdm.service
-        - touchegg
+        - touchegg.service
+      disabled:
+        - sshd.service
+        - cups.service
+        - cups.socket
+        - cups-browsed.service
+        - avahi-daemon.service
+        - avahi-daemon.socket
     user:
       enabled:
         - usbguard-notifier.service
