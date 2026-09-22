@@ -110,6 +110,7 @@ modules:
           - mesa-libgbm
           - mesa-va-drivers
           - mesa-vulkan-drivers
+          - vulkan-tools
           - libva-intel-media-driver
           - intel-gmmlib
           - intel-mediasdk
